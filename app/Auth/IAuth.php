@@ -6,7 +6,7 @@
  * Time: 21:36
  */
 
-namespace Auth;
+namespace App\Auth;
 
 interface IAuth
 {

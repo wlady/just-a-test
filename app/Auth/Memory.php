@@ -6,7 +6,7 @@
  * Time: 21:38
  */
 
-namespace Auth;
+namespace App\Auth;
 
 
 class Memory implements IAuth
