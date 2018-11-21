@@ -24,8 +24,8 @@ class GpRmc extends RmcAbstract
     {
         $this->setType('GP');
         $this->setTime($fields[1] ?? 0.0);
-        $this->setLatitude($fields[3] ?? 0.0);
-        $this->setLongitude($fields[5] ?? 0.0);
         $this->setStatus($fields[2] ?? 'A');
+        $this->setLatitude(substr($fields[3], 2) ?? 0.0);
+        $this->setLongitude(substr($fields[5], 2) ?? 0.0);
     }
 }
