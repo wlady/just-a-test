@@ -33,13 +33,14 @@ class Navigator
     {
         $parts = explode('$', $rawData);
         if (count($parts) != 2) {
-            return;
+            throw new \Exception('Wrong packet format');
         }
         $navParts = explode('#', $parts[0]);
         // for test purposes we interested only to the first field
-        if (is_numeric($navParts[1])) {
-            $this->nId = $navParts[1];
+        if (!is_numeric($navParts[1])) {
+            throw new \Exception('Wrong navigator format');
         }
+        $this->nId = $navParts[1];
         $this->rmc = new Rmc($parts[1]);
     }
 

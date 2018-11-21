@@ -31,7 +31,7 @@ class Rmc
         $parts = explode(',', $rawData);
         // naturally there are a few format
         if (strtoupper($parts[0]) != 'GPRMC') {
-            return;
+            throw new \Exception('Wrong RMC format');
         }
         $this->time = $parts[1] ?? 0.0;
         $this->status = $parts[2] ?? 'A';

@@ -87,7 +87,12 @@ class Listener
             $lines = explode(PHP_EOL, $buf);
             foreach ($lines as $line) {
                 if (trim($line)) {
-                    $navigator = new Navigator($line);
+                    try {
+                        $navigator = new Navigator($line);
+                        var_dump($navigator);
+                    } catch(\Exception $e) {
+                        error_log($e->getMessage() . PHP_EOL);
+                    }
                 }
             }
         }
