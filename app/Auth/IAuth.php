@@ -11,6 +11,4 @@ namespace App\Auth;
 interface IAuth
 {
     public function login($name, $password);
-    public function logout();
-    public function check();
 }

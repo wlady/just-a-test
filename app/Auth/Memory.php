@@ -19,7 +19,7 @@ namespace App\Auth;
  * Class Memory
  * @package App\Auth
  */
-class Memory implements IAuth
+class Memory extends Authenticator
 {
     /**
      * Local store
@@ -29,11 +29,6 @@ class Memory implements IAuth
         'user'  => 'user123',
     ];
 
-    public function __construct()
-    {
-        session_start();
-    }
-
     /**
      * @param $name
      * @param $password
@@ -41,29 +36,9 @@ class Memory implements IAuth
      */
     public function login($name, $password)
     {
-        $loggedId = array_key_exists($name, self::$store) && self::$store[$name] == $password;
-        if ($loggedId) {
-            $_SESSION['loggedIn'] = $loggedId;
-        }
+        $loggedIn = array_key_exists($name, self::$store) && self::$store[$name] == $password;
+        $this->setLoggedIn($loggedIn);
 
-        return $loggedId;
-    }
-
-    /**
-     * We could simply delete this flag
-     */
-    public function logout()
-    {
-        $_SESSION['loggedIn'] = false;
-    }
-
-    /**
-     * Check if user is logged in
-     *
-     * @return bool
-     */
-    public function check()
-    {
-        return $_SESSION['loggedIn'] ?? false;
+        return $loggedIn;
     }
 }
