@@ -13,15 +13,13 @@ class NavigatorTest extends TestCase
      * @param $data
      * @param $expected
      */
-    public function testLogin($data, $expected)
+    public function testNavigatorParser($data, $expected)
     {
         try {
-            $nav = new Navigator($data);
-            $this->assertInstanceOf($nav, GpRmc::class);
+            $nav = new Navigator($data['packet']);
+            $this->assertInstanceOf(GpRmc::class, $nav->getRmc());
         } catch (\Exception $e) {
-            if (!$expected) {
-                $this->assertFalse($expected);
-            }
+            $this->assertFalse($expected);
         }
     }
 
