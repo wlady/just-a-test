@@ -1,0 +1,17 @@
+<phpunit bootstrap="tests/bootstrap.php">
+    <testsuites>
+        <testsuite name="My Test Application">
+            <directory>tests/app</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">app</directory>
+        </whitelist>
+    </filter>
+    <!--logging>
+        <log type="coverage-html" target="tests/reports" />
+        <log type="coverage-clover" target="tests/reports/coverage.xml"/>
+        <log type="junit" target="tests/reports/logfile.xml" logIncompleteSkipped="false"/>
+    </logging-->
+</phpunit>

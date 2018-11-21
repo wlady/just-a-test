@@ -2,10 +2,10 @@
 /**
  * Very primitive authenticate provider. Do not use it in real projects :)
  *
- * Usage:
+ * Usage example:
  *
  * $auth = new Auth\Memory();
- * $res = $auth->login('name', 'password');
+ * $res = $auth->login($_POST['name'], $_POST['password']);
  *
  * Created by PhpStorm.
  * User: Kate

@@ -2,14 +2,14 @@
 /**
  * Very primitive authenticate provider. Do not use it in real projects :)
  *
- * Usage:
+ * Usage example:
  *
  * $auth = new Auth\Pdo([
  *   'dsn' => 'mysql:host=localhost;dbname=db_name;charset=utf8',
  *   'user' => 'db_user',
  *   'password' => 'db_password',
  * ]);
- * $res = $auth->login('name', 'password');
+ * $res = $auth->login($_POST['name'], $_POST['password']);
  *
  * Created by PhpStorm.
  * User: Kate
@@ -50,13 +50,14 @@ class Pdo extends Authenticator
      */
     public function login($name, $password)
     {
-        $stmt = self::$db->prepare('SELECT id FROM `users` WHERE `name`=? AND `password`=?');
-        $stmt->execute([
-            $name, $password
-        ]);
-        $id = $stmt->fetchColumn();
-        $this->setLoggedIn($loggedId = $id > 0);
+        $loggedIn = false;
+        $stmt = self::$db->prepare('SELECT * FROM `users` WHERE `name`=?');
+        $stmt->execute([$name]);
+        $row = $stmt->fetch();
+        if ($row && password_verify($password, $row->password)) {
+            $this->setLoggedIn($loggedIn = true);
+        }
 
-        return $loggedId;
+        return $loggedIn;
     }
 }

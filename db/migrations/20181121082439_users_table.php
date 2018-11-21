@@ -36,6 +36,10 @@ class UsersTable extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 100])
             ->addColumn('password', 'string', ['limit' => 100])
             ->addColumn('updated', 'timestamp')
+            ->addIndex(['name'], [
+                'unique' => true,
+                'name' => 'idx_name',
+            ])
             ->create();
     }
 }

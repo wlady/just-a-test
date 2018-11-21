@@ -21,7 +21,8 @@ abstract class Authenticator
      */
     public function __construct()
     {
-        session_start();
+        // suppress output to stderr to run unit tests correctly
+        @session_start();
     }
 
     /**
