@@ -40,12 +40,12 @@ class Navigators extends Repository
      */
     public function get(array $criteria = [])
     {
-        $query = 'SELECT FROM `navigators` WHERE 1';
+        $query = 'SELECT * FROM `navigators` WHERE 1';
+        // some criteria can add variables to params (currently not used)
         $params = [];
         $keys = array_keys($criteria);
         if (in_array('orderBy', $keys)) {
-            $query .= " ORDER BY ? ";
-            $params[] = $criteria['orderBy'];
+            $query .= " ORDER BY `{$criteria['orderBy']}` ";
         }
         if (in_array('order', $keys)) {
             $query .= " {$criteria['order']} ";

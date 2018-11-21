@@ -10,4 +10,7 @@ return [
         'address' => '127.0.0.1',
         'port' => 5000,
     ],
+    'twig' => [
+        'templates' => __DIR__ . '/resources/twig',
+    ],
 ];
