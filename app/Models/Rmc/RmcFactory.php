@@ -6,7 +6,7 @@
  * Time: 15:39
  */
 
-namespace App\Models;
+namespace App\Models\Rmc;
 
 /**
  * Class RmcFactory
@@ -16,7 +16,7 @@ class RmcFactory
 {
     /**
      * @param string $rawData
-     * @return GpRmc
+     * @return Rmc
      * @throws \Exception
      */
     public static function create($rawData = '')
@@ -24,24 +24,25 @@ class RmcFactory
         if (!trim($rawData)) {
             throw new \Exception('Empty RMC string');
         }
-        $parts = explode(',', $rawData);
-        if (strtoupper(substr($parts[0], 2)) != 'RMC') {
+        // explode raw data into fields
+        $fields = explode(',', $rawData);
+        if (strtoupper(substr($fields[0], 2)) != 'RMC') {
             throw new \Exception('Wrong RMC format');
         }
         // supported RMC formats
-        switch ($parts[0]) {
+        switch ($fields[0]) {
             case 'GPRMC':
-                return new GpRmc($parts);
+                return new GpRmc($fields);
                 break;
         /*
             case 'GARMC':
-                return new GaRmc($parts);
+                return new GaRmc($fields);
                 break;
             case 'GNRMC':
-                return new GnRmc($parts);
+                return new GnRmc($fields);
                 break;
         */
         }
-        throw new \Exception('Unrecognized RMC format ' . $parts[0]);
+        throw new \Exception('Unrecognized RMC format ' . $fields[0]);
     }
 }

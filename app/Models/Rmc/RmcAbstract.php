@@ -6,20 +6,20 @@
  * Time: 15:45
  */
 
-namespace App\Models;
+namespace App\Models\Rmc;
 
 abstract class RmcAbstract
 {
     private $type = '';
-    private $time = 0.0;
+    private $time = 'NOW()';
     private $status = '';
     private $latitude = 0.0;
     private $longitude = 0.0;
 
     /**
-     * @param float $time
+     * @param string $time
      */
-    public function setTime(float $time)
+    public function setTime(string $time)
     {
         $this->time = $time;
     }
@@ -49,9 +49,9 @@ abstract class RmcAbstract
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getTime(): float
+    public function getTime(): string
     {
         return $this->time;
     }

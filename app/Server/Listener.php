@@ -17,23 +17,13 @@ class Listener
     const LISTENER_DELAY = 500;
     const BUF_SIZE = 1024;
 
-    private static $db = null;
+    private static $config = null;
     private static $socket = null;
     private static $listen = true;
 
     public function __construct(array $config = [])
     {
-        // init PDO object
-        try {
-            $cnf = $config['db'];
-            self::$db = new \PDO($cnf['dsn'] ?? '', $cnf['user'] ?? '', $cnf['password'] ?? '');
-            self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            self::$db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-        } catch (\PDOException $e) {
-            die($e->getMessage());
-        }
-
-        // socket
+        self::$config = $config;
         if ((self::$socket = socket_create(AF_INET, SOCK_STREAM, 0)) < 0) {
             die('Socket creation error - ' . socket_strerror(self::$socket));
         }
@@ -131,17 +121,17 @@ class Listener
      */
     private function saveData(Navigator $navigator)
     {
-    var_dump([
-            $navigator->getNId(),
-            $navigator->getRmc()->getType(),
-            $navigator->getRmc()->getLatitude(),
-            $navigator->getRmc()->getLongitude(),
-            $navigator->getRmc()->getTime(),
-            $navigator->getRmc()->getLatitude(),
-            $navigator->getRmc()->getLongitude(),
-            $navigator->getRmc()->getTime(),
-        ]);
-        $stmt = self::$db->prepare('INSERT INTO `navigators` SET `nId`=?, `alias`="", `type`=?, `latitude`=?, `longitude`=?, `time`=? ON DUPLICATE KEY UPDATE `latitude`=?, `longitude`=?, `time`=?');
+        // init PDO object
+        try {
+            $cnf = self::$config['db'];
+            $db = new \PDO($cnf['dsn'] ?? '', $cnf['user'] ?? '', $cnf['password'] ?? '');
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
+        } catch (\PDOException $e) {
+            die($e->getMessage());
+        }
+        // save navigator
+        $stmt = $db->prepare('INSERT INTO `navigators` SET `nId`=?, `alias`="", `type`=?, `latitude`=?, `longitude`=?, `time`=? ON DUPLICATE KEY UPDATE `latitude`=?, `longitude`=?, `time`=?');
         $stmt->execute([
             $navigator->getNId(),
             $navigator->getRmc()->getType(),
