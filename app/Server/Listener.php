@@ -86,8 +86,9 @@ class Listener
             // parse lines
             $lines = explode(PHP_EOL, $buf);
             foreach ($lines as $line) {
-                $navigator = new Navigator($line);
-                var_dump($navigator);
+                if (trim($line)) {
+                    $navigator = new Navigator($line);
+                }
             }
         }
     }
