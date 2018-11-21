@@ -8,6 +8,8 @@
 
 namespace App\Server;
 
+use App\Models\Navigator;
+
 class Listener
 {
     const LISTENER_ADDRESS = '127.0.0.1';
@@ -84,7 +86,8 @@ class Listener
             // parse lines
             $lines = explode(PHP_EOL, $buf);
             foreach ($lines as $line) {
-                
+                $navigator = new Navigator($line);
+                var_dump($navigator);
             }
         }
     }
