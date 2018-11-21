@@ -9,6 +9,7 @@
 namespace App\Server;
 
 use App\Models\Navigator;
+use App\Repositories\Navigators;
 
 class Listener
 {
@@ -83,16 +84,17 @@ class Listener
     {
         $buf = $this->read($connection);
         if ($buf) {
-            // parse lines
-            $lines = explode(PHP_EOL, $buf);
-            foreach ($lines as $line) {
-                if (trim($line)) {
-                    try {
-                        $this->saveData(new Navigator($line));
-                    } catch (\Exception $e) {
-                        error_log($e->getMessage() . PHP_EOL);
+            try {
+                $navRepository = new Navigators(self::$config['db']);
+                // parse lines
+                $lines = explode(PHP_EOL, $buf);
+                foreach ($lines as $line) {
+                    if (trim($line)) {
+                        $navRepository->save(new Navigator($line));
                     }
                 }
+            } catch (\Exception $e) {
+                error_log($e->getMessage() . PHP_EOL);
             }
         }
     }
@@ -114,33 +116,33 @@ class Listener
         return $buf;
     }
 
-    /**
-     * Save navigator data to DB
-     *
-     * @param Navigator $navigator
-     */
-    private function saveData(Navigator $navigator)
-    {
-        // init PDO object
-        try {
-            $cnf = self::$config['db'];
-            $db = new \PDO($cnf['dsn'] ?? '', $cnf['user'] ?? '', $cnf['password'] ?? '');
-            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-        } catch (\PDOException $e) {
-            die($e->getMessage());
-        }
-        // save navigator
-        $stmt = $db->prepare('INSERT INTO `navigators` SET `nId`=?, `alias`="", `type`=?, `latitude`=?, `longitude`=?, `time`=? ON DUPLICATE KEY UPDATE `latitude`=?, `longitude`=?, `time`=?');
-        $stmt->execute([
-            $navigator->getNId(),
-            $navigator->getRmc()->getType(),
-            $navigator->getRmc()->getLatitude(),
-            $navigator->getRmc()->getLongitude(),
-            $navigator->getRmc()->getTime(),
-            $navigator->getRmc()->getLatitude(),
-            $navigator->getRmc()->getLongitude(),
-            $navigator->getRmc()->getTime(),
-        ]);
-    }
+//    /**
+//     * Save navigator data to DB
+//     *
+//     * @param Navigator $navigator
+//     */
+//    private function saveData(Navigator $navigator)
+//    {
+//        // init PDO object
+//        try {
+//            $cnf = self::$config['db'];
+//            $db = new \PDO($cnf['dsn'] ?? '', $cnf['user'] ?? '', $cnf['password'] ?? '');
+//            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+//            $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
+//        } catch (\PDOException $e) {
+//            die($e->getMessage());
+//        }
+//        // save navigator
+//        $stmt = $db->prepare('INSERT INTO `navigators` SET `nId`=?, `alias`="", `type`=?, `latitude`=?, `longitude`=?, `time`=? ON DUPLICATE KEY UPDATE `latitude`=?, `longitude`=?, `time`=?');
+//        $stmt->execute([
+//            $navigator->getNId(),
+//            $navigator->getRmc()->getType(),
+//            $navigator->getRmc()->getLatitude(),
+//            $navigator->getRmc()->getLongitude(),
+//            $navigator->getRmc()->getTime(),
+//            $navigator->getRmc()->getLatitude(),
+//            $navigator->getRmc()->getLongitude(),
+//            $navigator->getRmc()->getTime(),
+//        ]);
+//    }
 }

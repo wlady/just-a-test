@@ -10,7 +10,7 @@ namespace App\Models;
 
 use App\Models\Rmc\{RmcAbstract, RmcFactory};
 
-class Navigator
+class Navigator implements INavigator
 {
     // navigator ID
     private $nId = '';
@@ -21,7 +21,9 @@ class Navigator
 
     public function __construct($rawData = '')
     {
-        $this->parse($rawData);
+        if ($rawData) {
+            $this->parse($rawData);
+        }
     }
 
     /**
