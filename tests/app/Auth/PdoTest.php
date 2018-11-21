@@ -16,6 +16,8 @@ class PdoTest extends TestCase
 
     /**
      * @dataProvider loginDataProvider
+     * @param $data
+     * @param $expected
      */
     public function testLogin($data, $expected)
     {

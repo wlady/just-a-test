@@ -63,7 +63,7 @@ class Navigator
     }
 
     /**
-     * @return Rmc
+     * @return RmcAbstract
      */
     public function getRmc() : RmcAbstract
     {
