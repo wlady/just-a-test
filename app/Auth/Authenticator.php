@@ -16,6 +16,9 @@ namespace App\Auth;
  */
 abstract class Authenticator
 {
+    /**
+     * Memory authenticator constructor.
+     */
     public function __construct()
     {
         session_start();
@@ -47,6 +50,11 @@ abstract class Authenticator
         $_SESSION['loggedIn'] = $loggedIn;
     }
 
+    /**
+     * @param $name
+     * @param $password
+     * @return bool True on success, False otherwise
+     */
     abstract public function login($name, $password);
 
 }

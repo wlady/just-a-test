@@ -30,9 +30,7 @@ class Memory extends Authenticator
     ];
 
     /**
-     * @param $name
-     * @param $password
-     * @return bool True on success, False otherwise
+     * @inheritdoc
      */
     public function login($name, $password)
     {

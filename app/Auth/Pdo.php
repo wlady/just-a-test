@@ -27,6 +27,11 @@ class Pdo extends Authenticator
 {
     private static $db = null;
 
+    /**
+     * Pdo authenticator constructor.
+     * @param array $config
+     * @throws \PDOException
+     */
     public function __construct(array $config = [])
     {
         try {
@@ -41,13 +46,16 @@ class Pdo extends Authenticator
     }
 
     /**
-     * @param $name
-     * @param $password
-     * @return bool True on success, False otherwise
+     * @inheritdoc
      */
     public function login($name, $password)
     {
-        $this->setLoggedIn($loggedId = true);
+        $stmt = self::$db->prepare('SELECT id FROM `users` WHERE `name`=? AND `password`=?');
+        $stmt->execute([
+            $name, $password
+        ]);
+        $id = $stmt->fetchColumn();
+        $this->setLoggedIn($loggedId = $id > 0);
 
         return $loggedId;
     }
