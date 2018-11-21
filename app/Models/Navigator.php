@@ -64,7 +64,7 @@ class Navigator
     /**
      * @return Rmc
      */
-    public function getRmc() : Rmc
+    public function getRmc() : RmcAbstract
     {
         return $this->rmc;
     }

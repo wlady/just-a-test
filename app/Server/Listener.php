@@ -131,9 +131,23 @@ class Listener
      */
     private function saveData(Navigator $navigator)
     {
-        $stmt = self::$db->prepare('INSERT INTO `navigators` SET `nId`=?, `lat`=?, `lon`=?, `updated`=?');
+    var_dump([
+            $navigator->getNId(),
+            $navigator->getRmc()->getType(),
+            $navigator->getRmc()->getLatitude(),
+            $navigator->getRmc()->getLongitude(),
+            $navigator->getRmc()->getTime(),
+            $navigator->getRmc()->getLatitude(),
+            $navigator->getRmc()->getLongitude(),
+            $navigator->getRmc()->getTime(),
+        ]);
+        $stmt = self::$db->prepare('INSERT INTO `navigators` SET `nId`=?, `alias`="", `type`=?, `latitude`=?, `longitude`=?, `time`=? ON DUPLICATE KEY UPDATE `latitude`=?, `longitude`=?, `time`=?');
         $stmt->execute([
             $navigator->getNId(),
+            $navigator->getRmc()->getType(),
+            $navigator->getRmc()->getLatitude(),
+            $navigator->getRmc()->getLongitude(),
+            $navigator->getRmc()->getTime(),
             $navigator->getRmc()->getLatitude(),
             $navigator->getRmc()->getLongitude(),
             $navigator->getRmc()->getTime(),
