@@ -2,6 +2,11 @@
 /**
  * Very primitive authenticate provider. Do not use it in real projects :)
  *
+ * Usage:
+ *
+ * $auth = new Auth\Memory();
+ * $res = $auth->login('name', 'password');
+ *
  * Created by PhpStorm.
  * User: Kate
  * Date: 20.11.2018
