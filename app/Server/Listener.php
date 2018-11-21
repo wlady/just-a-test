@@ -81,13 +81,16 @@ class Listener
     {
         $buf = $this->read($connection);
         if ($buf) {
-            // parse data
-            var_dump($buf);
+            // parse lines
+            $lines = explode(PHP_EOL, $buf);
+            foreach ($lines as $line) {
+                
+            }
         }
     }
 
     /**
-     * Read all lines from socket.
+     * Read data from socket.
      *
      * @param $connection
      * @return string
