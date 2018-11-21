@@ -51,6 +51,23 @@ abstract class Authenticator
         $_SESSION['loggedIn'] = $loggedIn;
     }
 
+    public function csrfGenerate() : string
+    {
+        $_SESSION['csrftoken'] = bin2hex(random_bytes(10));
+
+        return $this->csrfGet();
+    }
+
+    public function csrfGet() : string
+    {
+        return isset($_SESSION['csrftoken']) ? $_SESSION['csrftoken'] : '';
+    }
+
+    public function csrfReset()
+    {
+        $_SESSION['csrftoken'] = '';
+    }
+
     /**
      * @param $name
      * @param $password

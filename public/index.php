@@ -18,17 +18,17 @@ $loader = new \Twig_Loader_Filesystem($config['twig']['templates'] ?? __DIR__);
 $twig = new \Twig_Environment($loader);
 
 $auth = new Auth\Pdo($config['db']);
-if ($_POST['csrf'] && $_POST['csrf'] == $_SESSION['csrf']) {
+// check login/logout requests
+if (isset($_POST['logout'])) {
+    $auth->logout();
+} else if (isset($_POST['csrf'])) {
     $auth->login($_POST['name'], $_POST['password']);
-    $_SESSION['csrf'] = '';
 }
-
+$auth->csrfReset();
 if ($auth->check()) {
     // user is logged in
-    $_SESSION['csrf'] = random_bytes(32);
     $navRepository = new Navigators($config['db']);
     echo $twig->render('index.twig', [
-        'csrf' => $_SESSION['csrf'],
         'points' => $navRepository->get([
             'limit' => 10,
             'order' => 'DESC',
@@ -36,5 +36,7 @@ if ($auth->check()) {
         ]),
     ]);
 } else {
-    echo $twig->render('login.twig');
+    echo $twig->render('login.twig', [
+        'csrftoken' => $auth->csrfGenerate(),
+    ]);
 }
