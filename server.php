@@ -14,6 +14,6 @@ require_once __DIR__ . '/bootstrap.php';
 
 $config = include __DIR__ . '/config.php';
 
-$server = new Listener($config['listener']);
+$server = new Listener($config);
 
 $server->run();

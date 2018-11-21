@@ -17,23 +17,33 @@ class Listener
     const LISTENER_DELAY = 500;
     const BUF_SIZE = 1024;
 
+    private static $db = null;
     private static $socket = null;
     private static $listen = true;
 
     public function __construct(array $config = [])
     {
+        // init PDO object
+        try {
+            $cnf = $config['db'];
+            self::$db = new \PDO($cnf['dsn'] ?? '', $cnf['user'] ?? '', $cnf['password'] ?? '');
+            self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            self::$db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
+        } catch (\PDOException $e) {
+            die($e->getMessage());
+        }
+
+        // socket
         if ((self::$socket = socket_create(AF_INET, SOCK_STREAM, 0)) < 0) {
             die('Socket creation error - ' . socket_strerror(self::$socket));
         }
-
-        if (($ret = socket_bind(self::$socket, $config['address'] ?? self::LISTENER_ADDRESS, $config['port'] ?? self::LISTENER_PORT)) < 0) {
+        $cnf = $config['listener'];
+        if (($ret = socket_bind(self::$socket, $cnf['address'] ?? self::LISTENER_ADDRESS, $cnf['port'] ?? self::LISTENER_PORT)) < 0) {
             die('Socket binding error - ' . socket_strerror(self::$socket));
         }
-
         if (($ret = socket_listen(self::$socket, 0)) < 0) {
             die('Socket listen error - ' . socket_strerror(self::$socket));
         }
-
         socket_set_nonblock(self::$socket);
     }
 
@@ -46,7 +56,7 @@ class Listener
             $connection = @socket_accept(self::$socket);
             if ($connection === false) {
                 usleep(self::LISTENER_DELAY);
-            } elseif ($connection > 0) {
+            } else if ($connection > 0) {
                 $this->handleRequest($connection);
             } else {
                 die('Socket error - ' . socket_strerror($connection));
@@ -57,7 +67,7 @@ class Listener
     /**
      * Create the new process or die
      *
-     * @param $connection socket
+     * @param $connection socket resource
      */
     private function handleRequest($connection)
     {
@@ -65,7 +75,7 @@ class Listener
 
         if ($pid == -1) {
             die('Cannot fork process');
-        } elseif ($pid == 0) {
+        } else if ($pid == 0) {
             // create alone process
             self::$listen = false;
             socket_close(self::$socket);
@@ -77,7 +87,7 @@ class Listener
     }
 
     /**
-     * @param $connection socket
+     * @param $connection socket resource
      */
     private function worker($connection)
     {
@@ -88,9 +98,8 @@ class Listener
             foreach ($lines as $line) {
                 if (trim($line)) {
                     try {
-                        $navigator = new Navigator($line);
-                        var_dump($navigator);
-                    } catch(\Exception $e) {
+                        $this->saveData(new Navigator($line));
+                    } catch (\Exception $e) {
                         error_log($e->getMessage() . PHP_EOL);
                     }
                 }
@@ -113,5 +122,21 @@ class Listener
         }
 
         return $buf;
+    }
+
+    /**
+     * Save navigator data to DB
+     *
+     * @param Navigator $navigator
+     */
+    private function saveData(Navigator $navigator)
+    {
+        $stmt = self::$db->prepare('INSERT INTO `navigators` SET `nId`=?, `lat`=?, `lon`=?, `updated`=?');
+        $stmt->execute([
+            $navigator->getNId(),
+            $navigator->getRmc()->getLatitude(),
+            $navigator->getRmc()->getLongitude(),
+            $navigator->getRmc()->getTime(),
+        ]);
     }
 }
