@@ -15,7 +15,7 @@ class Navigator
     private $nId = '';
     // custom name
     private $alias = '';
-    // associated Rmc record
+    /** @var RmcAbstract */
     private $rmc = null;
 
     public function __construct($rawData = '')
@@ -28,6 +28,7 @@ class Navigator
      * Example: #357671030507872#user#4444#AUTOLOW#1#14508989$GPRMC,123347.000,A,4313.7477,N, 02752.4516,E,0.00,284.40,080811,,,D*63##
      *
      * @param string $rawData
+     * @throws \Exception
      */
     private function parse($rawData = '')
     {
@@ -41,7 +42,7 @@ class Navigator
             throw new \Exception('Wrong navigator format');
         }
         $this->nId = $navParts[1];
-        $this->rmc = new Rmc($parts[1]);
+        $this->rmc = RmcFactory::create($parts[1]);
     }
 
     /**

@@ -10,10 +10,6 @@ namespace App\Models;
 
 class Rmc
 {
-    private $time = 0;
-    private $status = 'A';
-    private $latitude = 0.0;
-    private $longitude = 0.0;
 
     public function __construct($rawData = '')
     {
@@ -25,6 +21,7 @@ class Rmc
      * Example: GPRMC,123347.000,A,4313.7477,N, 02752.4516,E,0.00,284.40,080811,,,D*63
      *
      * @param string $rawData
+     * @throws \Exception
      */
     private function parse($rawData = '')
     {
