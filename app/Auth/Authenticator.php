@@ -17,7 +17,6 @@ namespace App\Auth;
 abstract class Authenticator
 {
     /**
-     * Constructor callback
      * @param array $config
      */
     public function __construct(array $config = [])
