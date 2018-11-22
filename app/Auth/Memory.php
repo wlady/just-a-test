@@ -4,7 +4,7 @@
  *
  * Usage example:
  *
- * $auth = Auth\Memory::getInstance([
+ * $auth = new Auth\Memory([
  *   'session' => [
  *       'coockie_lifetime' => 86400,
  *   ],

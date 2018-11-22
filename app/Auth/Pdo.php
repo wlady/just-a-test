@@ -4,7 +4,7 @@
  *
  * Usage example:
  *
- * $auth = Auth\Pdo::getInstance([
+ * $auth = new Auth\Pdo([
  *   'session' => [
  *       'coockie_lifetime' => 86400,
  *   ],
