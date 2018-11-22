@@ -3,12 +3,13 @@
  * Very primitive authenticate provider. Do not use it in real projects :)
  *
  * Created by PhpStorm.
- * User: Kate
+ * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 21.11.2018
  * Time: 11:39
  */
 
 namespace App\Auth;
+use App\Core\Singleton;
 
 /**
  * Class Memory
@@ -16,11 +17,18 @@ namespace App\Auth;
  */
 abstract class Authenticator
 {
+    use Singleton;
+
     /**
-     * Memory authenticator constructor.
+     * Constructor callback
      */
-    public function __construct()
+    protected function init()
     {
+        if (!session_id()) {
+            if (isset($_REQUEST['sid'])) {
+                session_id(filter_var($_REQUEST['sid'], FILTER_SANITIZE_STRING));
+            }
+        }
         // suppress output to stderr to run unit tests correctly
         @session_start();
     }

@@ -21,7 +21,7 @@ class PdoTest extends TestCase
      */
     public function testLogin($data, $expected)
     {
-        $auth = new Pdo(self::$config['db']);
+        $auth = Pdo::getInstance(self::$config['db']);
         $res = $auth->login($data['name'], $data['password']);
         $this->assertEquals($res, $expected);
         // test user is logged in

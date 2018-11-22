@@ -12,7 +12,7 @@ class MemoryTest extends TestCase
      */
     public function testLogin($data, $expected)
     {
-        $auth = new Memory();
+        $auth = Memory::getInstance();
         $res = $auth->login($data['name'], $data['password']);
         $this->assertEquals($res, $expected);
         // test user is logged in

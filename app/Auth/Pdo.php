@@ -12,7 +12,7 @@
  * $res = $auth->login($_POST['name'], $_POST['password']);
  *
  * Created by PhpStorm.
- * User: Kate
+ * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 20.11.2018
  * Time: 21:38
  */
@@ -32,7 +32,7 @@ class Pdo extends Authenticator
      * @param array $config
      * @throws \PDOException
      */
-    public function __construct(array $config = [])
+    protected function init(array $config = [])
     {
         try {
             self::$db = new \PDO($config['dsn'] ?? '', $config['user'] ?? '', $config['password'] ?? '');
@@ -42,7 +42,6 @@ class Pdo extends Authenticator
             // for simplicity we die here with PDO message
             die($e->getMessage());
         }
-        parent::__construct();
     }
 
     /**

@@ -18,6 +18,7 @@ $loader = new \Twig_Loader_Filesystem($config['twig']['templates'] ?? __DIR__);
 $twig = new \Twig_Environment($loader);
 
 $auth = new Auth\Pdo($config['db']);
+
 // check login/logout requests
 if (isset($_POST['logout'])) {
     $auth->logout();
@@ -25,6 +26,7 @@ if (isset($_POST['logout'])) {
     $auth->login($_POST['name'], $_POST['password']);
 }
 $auth->csrfReset();
+
 if ($auth->check()) {
     // user is logged in
     $navRepository = new Navigators($config['db']);

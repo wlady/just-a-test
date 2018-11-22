@@ -4,11 +4,11 @@
  *
  * Usage example:
  *
- * $auth = new Auth\Memory();
+ * $auth = Auth\Memory::getInstance();
  * $res = $auth->login($_POST['name'], $_POST['password']);
  *
  * Created by PhpStorm.
- * User: Kate
+ * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 20.11.2018
  * Time: 21:38
  */
