@@ -17,4 +17,7 @@ return [
     'twig' => [
         'templates' => __DIR__ . '/resources/twig',
     ],
+    'keys' => [
+        'google_api_key' => 'AIzaSyDDfbRuvoJZFG4ICmVB0948YQehxy_8M-8',
+    ],
 ];

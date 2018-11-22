@@ -1,7 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Vladimir Zabara <wlady2001@gmail.com>
+ * User: Vladimir
+ *
+ * Zabara <wlady2001@gmail.com>
  * Date: 21.11.2018
  * Time: 13:43
  */

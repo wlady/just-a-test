@@ -25,7 +25,7 @@ trait Singleton
         return self::$instance;
     }
 
-    public function init()
+    protected function init()
     {
     }
 }

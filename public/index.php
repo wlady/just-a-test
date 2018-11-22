@@ -31,6 +31,7 @@ if ($auth->check()) {
     // user is logged in
     $navRepository = new Navigators($config['db']);
     echo $twig->render('index.twig', [
+        'config' => $config,
         'points' => $navRepository->get([
             'limit' => 10,
             'order' => 'DESC',
@@ -42,4 +43,3 @@ if ($auth->check()) {
         'csrftoken' => $auth->csrfGenerate(),
     ]);
 }
-flog('/tmp/flog.txt', session_save_path());

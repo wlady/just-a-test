@@ -49,7 +49,6 @@ class Pdo extends Authenticator
             die($e->getMessage());
         }
         parent::__construct($config);
-        flog('/tmp/flog2.txt', session_save_path());
     }
 
     /**

@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    .container {
+        #gmap {
+            width: 0 auto;
+            height: 600px !important;
+        }
+    }
+}
