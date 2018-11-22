@@ -18,16 +18,17 @@ abstract class Authenticator
 {
     /**
      * Constructor callback
+     * @param array $config
      */
     public function __construct(array $config = [])
     {
         $cfg = $config['session'] ?? [];
         if (!session_id()) {
             if (isset($_REQUEST['sid'])) {
-                session_id(filter_var($_REQUEST['sid'], FILTER_SANITIZE_STRING));
+                @session_id(filter_var($_REQUEST['sid'], FILTER_SANITIZE_STRING));
             }
             if (isset($cfg['save_path'])) {
-                session_save_path($cfg['save_path']);
+                @session_save_path($cfg['save_path']);
             }
         }
         // suppress output to stderr to run unit tests correctly
@@ -54,6 +55,7 @@ abstract class Authenticator
 
     /**
      * Track logged in status
+     * @param bool $loggedIn
      */
     protected function setLoggedIn($loggedIn = false)
     {

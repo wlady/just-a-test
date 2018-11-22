@@ -16,10 +16,10 @@ class RmcFactory
 {
     /**
      * @param string $rawData
-     * @return Rmc
+     * @return RmcAbstract
      * @throws \Exception
      */
-    public static function create($rawData = '')
+    public static function create($rawData = '') : RmcAbstract
     {
         if (!trim($rawData)) {
             throw new \Exception('Empty RMC string');

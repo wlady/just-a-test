@@ -2,9 +2,17 @@
 
 body {
     .container {
+        .padding {
+            padding: 100px 0;
+        }
+        .loginForm {
+            width: 600px !important;
+            margin: 0 auto;
+        }
         #gmap {
-            width: 0 auto;
+            width: auto;
             height: 600px !important;
+            margin: 0 auto;
         }
     }
 }
