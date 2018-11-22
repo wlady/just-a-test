@@ -61,6 +61,11 @@ abstract class Authenticator
         $_SESSION['loggedIn'] = $loggedIn;
     }
 
+    /**
+     * Simple CSRF token generator
+     *
+     * @return string
+     */
     public function csrfGenerate() : string
     {
         $_SESSION['csrftoken'] = bin2hex(random_bytes(10));
@@ -68,11 +73,19 @@ abstract class Authenticator
         return $this->csrfGet();
     }
 
+    /**
+     * Get saved CSRF token
+     *
+     * @return string
+     */
     public function csrfGet() : string
     {
-        return isset($_SESSION['csrftoken']) ? $_SESSION['csrftoken'] : '';
+        return $_SESSION['csrftoken'] ?? '';
     }
 
+    /**
+     * Reset old CSRF token
+     */
     public function csrfReset()
     {
         $_SESSION['csrftoken'] = '';
