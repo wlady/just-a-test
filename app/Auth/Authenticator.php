@@ -17,20 +17,25 @@ use App\Core\Singleton;
  */
 abstract class Authenticator
 {
-    use Singleton;
+//    use Singleton;
 
     /**
      * Constructor callback
      */
-    protected function init()
+    public function __construct(array $config = [])
     {
+flog('/tmp/flog3.txt', $config);
+        $cfg = $config['session'] ?? [];
         if (!session_id()) {
             if (isset($_REQUEST['sid'])) {
                 session_id(filter_var($_REQUEST['sid'], FILTER_SANITIZE_STRING));
             }
+            if (isset($cfg['save_path'])) {
+                session_save_path($cfg['save_path']);
+            }
         }
         // suppress output to stderr to run unit tests correctly
-        @session_start();
+        @session_start($cfg);
     }
 
     /**

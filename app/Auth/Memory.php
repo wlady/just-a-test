@@ -4,7 +4,11 @@
  *
  * Usage example:
  *
- * $auth = Auth\Memory::getInstance();
+ * $auth = Auth\Memory::getInstance([
+ *   'session' => [
+ *       'coockie_lifetime' => 86400,
+ *   ],
+ * ]);
  * $res = $auth->login($_POST['name'], $_POST['password']);
  *
  * Created by PhpStorm.

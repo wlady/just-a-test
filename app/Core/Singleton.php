@@ -10,7 +10,7 @@ namespace App\Core;
 
 trait Singleton
 {
-    private static $instance = [];
+    private static $instance = null;
 
     final private function __construct()
     {
@@ -25,7 +25,7 @@ trait Singleton
         return self::$instance;
     }
 
-    protected function init()
+    public function init()
     {
     }
 }

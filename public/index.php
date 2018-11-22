@@ -17,12 +17,12 @@ $config = include __DIR__ . '/../config.php';
 $loader = new \Twig_Loader_Filesystem($config['twig']['templates'] ?? __DIR__);
 $twig = new \Twig_Environment($loader);
 
-$auth = new Auth\Pdo($config['db']);
+$auth = new Auth\Pdo($config);
 
 // check login/logout requests
 if (isset($_POST['logout'])) {
     $auth->logout();
-} else if (isset($_POST['csrf'])) {
+} else if (isset($_POST['csrf']) && $_POST['csrf'] == $auth->csrfGet()) {
     $auth->login($_POST['name'], $_POST['password']);
 }
 $auth->csrfReset();
@@ -42,3 +42,4 @@ if ($auth->check()) {
         'csrftoken' => $auth->csrfGenerate(),
     ]);
 }
+flog('/tmp/flog.txt', session_save_path());

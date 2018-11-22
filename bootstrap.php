@@ -9,4 +9,6 @@ if ( ! defined( 'PATH_SEPARATOR' ) ) {
     define( 'PATH_SEPARATOR', getenv( 'COMSPEC' ) ? ';' : ':' );
 }
 
-include_once __DIR__ . '/vendor/autoload.php';
+include_once 'functions.php';
+
+include_once 'vendor/autoload.php';
