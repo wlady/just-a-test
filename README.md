@@ -37,7 +37,7 @@ For simplicity server script can be stopped by Ctrl~C.
 
 ### Front End ###
 
-Install virtual host for this app and open it in browser. Login page will be shown. Use "admin" as login and "admin123" as password.
+Install virtual host for this app and open it in browser. Login page will be shown. Use "admin" as name and "admin123" as password.
    
 The main page will appear and the latest POIs will be loaded. The data updated automatically (once per 10 seconds).
 
@@ -62,7 +62,7 @@ DB migrations are places in **db/migrations** and seeds are in **db/seeds**.
 
 Twig was used to separate HTML from PHP. Twig templates can be found in **resources/twig** directory.
 
-JavaScript files was placed to **resources/js** directory and have been compiled together with **webpack**.
+JavaScript files was placed to **resources/js**, and SCSS to **resources/scss**.
 
 The simplest ever front-end controller is **index.php** under the **public** directory (DOCUMENT_ROOT). 
 Besides there is another AJAX controller **ajax-latest-navigators.php** to simulate Google map auto refresh.
