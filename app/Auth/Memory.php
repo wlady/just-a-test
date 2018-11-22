@@ -36,7 +36,7 @@ class Memory extends Authenticator
     /**
      * @inheritdoc
      */
-    public function login($name, $password)
+    public function login($name, $password) : bool
     {
         $loggedIn = array_key_exists($name, self::$store) && self::$store[$name] == $password;
         $this->setLoggedIn($loggedIn);

@@ -1,16 +1,16 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Vladimir
- *
- * Zabara <wlady2001@gmail.com>
+ * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 21.11.2018
  * Time: 13:43
  */
 
 namespace App\Models;
 
-use App\Models\Rmc\{RmcAbstract, RmcFactory};
+use App\Models\Rmc\{
+    RmcAbstract, RmcFactory
+};
 
 class Navigator implements INavigator
 {
@@ -53,7 +53,7 @@ class Navigator implements INavigator
     /**
      * @return string
      */
-    public function getNId(): string
+    public function getNId() : string
     {
         return $this->nId;
     }
@@ -61,7 +61,7 @@ class Navigator implements INavigator
     /**
      * @return string
      */
-    public function getAlias(): string
+    public function getAlias() : string
     {
         return $this->alias;
     }

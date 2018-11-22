@@ -8,9 +8,11 @@
 
 namespace App\Models;
 
+use App\Models\Rmc\RmcAbstract;
+
 interface INavigator
 {
-    public function getNId();
-    public function getAlias();
-    public function getRmc();
+    public function getNId() : string;
+    public function getAlias() : string;
+    public function getRmc() : RmcAbstract;
 }

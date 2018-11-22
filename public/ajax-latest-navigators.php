@@ -1,7 +1,9 @@
 <?php
 /**
+ * Primitive AJAX controller. The latest 10 records will be shown.
+ *
  * Created by PhpStorm.
- * User: Kate
+ * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 21.11.2018
  * Time: 13:28
  */

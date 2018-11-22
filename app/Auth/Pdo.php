@@ -54,7 +54,7 @@ class Pdo extends Authenticator
     /**
      * @inheritdoc
      */
-    public function login($name, $password)
+    public function login($name, $password) : bool
     {
         $loggedIn = false;
         $stmt = self::$db->prepare('SELECT * FROM `users` WHERE `name`=?');

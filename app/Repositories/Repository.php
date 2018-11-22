@@ -8,7 +8,7 @@
 
 namespace App\Repositories;
 
-class Repository
+abstract class Repository
 {
     protected static $db = null;
 

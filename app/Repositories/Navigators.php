@@ -36,7 +36,7 @@ class Navigators extends Repository
      * Get navigators by criteria
      *
      * @param array $criteria
-     * @return array
+     * @return mixed
      */
     public function get(array $criteria = [])
     {
@@ -66,7 +66,14 @@ class Navigators extends Repository
         return $stmt->fetchAll();
     }
 
-    public function rename($id, $alias = '')
+    /**
+     * Rename navigator alias by ID
+     *
+     * @param $id
+     * @param string $alias
+     * @return bool
+     */
+    public function rename($id, $alias = '') : bool
     {
         try {
             $stmt = self::$db->prepare('UPDATE `navigators` SET `alias`=?, `time`=`time` WHERE `id`=?');

@@ -9,7 +9,6 @@
  */
 
 namespace App\Auth;
-use App\Core\Singleton;
 
 /**
  * Class Memory
