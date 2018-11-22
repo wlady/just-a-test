@@ -4,7 +4,7 @@ This is a test Web App created from scratch in "vanilla" way.
 
 The following packages should be installed in OS:
 
- - Composer - to install PHPUnit, TWig and Phinx (DB migrations)
+ - [Composer](https://getcomposer.org/) - to install [PHPUnit](https://phpunit.de/), [TWig](https://twig.symfony.com/) and [Phinx](https://phinx.org/) (DB migrations)
  - xDebug (code coverage reports, optionally)
 
 Create database **test** manually. Check settings in **config.php** and **phinx.yml**.
@@ -37,9 +37,9 @@ For simplicity server script can be stopped by Ctrl~C.
 
 ### Front End ###
 
-Install virtual host for this app and open it in browser. Login page is shown. You can use "admin" as login and "admin123" as password.
+Install virtual host for this app and open it in browser. Login page will be shown. Use "admin" as login and "admin123" as password.
    
-The main page will appear and the latest POIs will be loaded. The data updated automatically once per 10 seconds.
+The main page will appear and the latest POIs will be loaded. The data updated automatically (once per 10 seconds).
 
 
 Login Page
