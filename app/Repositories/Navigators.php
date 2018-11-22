@@ -40,9 +40,16 @@ class Navigators extends Repository
      */
     public function get(array $criteria = [])
     {
-        $query = 'SELECT * FROM `navigators` WHERE 1';
         // some criteria can add variables to params (currently not used)
         $params = [];
+        $keys = array_keys($criteria);
+        $fields = '*';
+        // fields should be a STRING!!!
+        // Ex: 'id, alias, IF(`time`<=(NOW()-INTERVAL 1 DAY), true, false) active'
+        if (in_array('fields', $keys)) {
+            $fields = $criteria['fields'];
+        }
+        $query = "SELECT {$fields} FROM `navigators` WHERE 1";
         $keys = array_keys($criteria);
         if (in_array('orderBy', $keys)) {
             $query .= " ORDER BY `{$criteria['orderBy']}` ";
@@ -57,5 +64,22 @@ class Navigators extends Repository
         $stmt->execute($params);
 
         return $stmt->fetchAll();
+    }
+
+    public function rename($id, $alias = '')
+    {
+        try {
+            $stmt = self::$db->prepare('UPDATE `navigators` SET `alias`=?, `time`=`time` WHERE `id`=?');
+            $stmt->execute([
+                $alias,
+                $id,
+            ]);
+
+            return true;
+        } catch (\PDOException $e) {
+            // error_log(...)
+        }
+
+        return false;
     }
 }

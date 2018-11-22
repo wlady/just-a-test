@@ -23,20 +23,25 @@ $auth = new Auth\Pdo($config);
 if (isset($_POST['logout'])) {
     $auth->logout();
 } else if (isset($_POST['csrf']) && $_POST['csrf'] == $auth->csrfGet()) {
-    $auth->login($_POST['name'], $_POST['password']);
+    $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+    $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+    $auth->login($name, $password);
+} else if (isset($_POST['rename'])) {
+    // new alias name received
+    $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
+    $alias = filter_var($_POST['alias'], FILTER_SANITIZE_STRING);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => (new Navigators($config['db']))->rename($id, $alias),
+    ]);
+    die;
 }
 $auth->csrfReset();
 
 if ($auth->check()) {
     // user is logged in
-    $navRepository = new Navigators($config['db']);
     echo $twig->render('index.twig', [
         'config' => $config,
-        'points' => $navRepository->get([
-            'limit' => 10,
-            'order' => 'DESC',
-            'orderBy' => 'time',
-        ]),
     ]);
 } else {
     echo $twig->render('login.twig', [

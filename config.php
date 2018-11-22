@@ -18,6 +18,6 @@ return [
         'templates' => __DIR__ . '/resources/twig',
     ],
     'keys' => [
-        'google_api_key' => 'AIzaSyDDfbRuvoJZFG4ICmVB0948YQehxy_8M-8',
+        'google_api_key' => 'AIzaSyCuXts9izkDEJGvJbwRlnbRoCaU1TkFfmA',
     ],
 ];

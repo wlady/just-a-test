@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -37,10 +36,13 @@ module.exports = {
         },
         ]
     },
+    optimization: {
+        minimize: false
+    },
     plugins: [
         new ExtractTextPlugin({
             filename: '../css/style.css',
-            allChunks: true,
+            allChunks: false,
         }),
     ]
 }

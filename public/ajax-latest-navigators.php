@@ -16,6 +16,7 @@ $config = include __DIR__ . '/../config.php';
 
 $navRepository = new Navigators($config['db']);
 $recs = $navRepository->get([
+    'fields' => '*, IF(DATE(`time`)=DATE(NOW()-INTERVAL 1 DAY), true, false) active',
     'limit' => 10,
     'order' => 'DESC',
     'orderBy' => 'time',
@@ -27,6 +28,25 @@ if ($recs === false) {
         'success' => false,
     ]);
 } else {
+    /*
+    // GeoJSON format
+    $data = [];
+    foreach ($recs as $rec) {
+        $data[] = [
+            'type' => 'Feature',
+            'geometry' => [
+                'type' => 'Point',
+                'coordinates' => [
+                    $rec->latitude,
+                    $rec->longitude,
+                ]
+            ],
+            'properties' => [
+                'name' => $rec->alias ?? $rec->nId,
+            ]
+        ];
+    }
+    */
     echo json_encode([
         'data' => $recs,
         'success' => true,
