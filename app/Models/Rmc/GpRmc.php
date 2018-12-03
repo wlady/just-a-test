@@ -16,6 +16,11 @@ namespace App\Models\Rmc;
  */
 class GpRmc extends RmcAbstract
 {
+    private $dirs = [
+        'lat' => ['S', 'N'],
+        'lng' => ['W', 'E'],
+    ];
+
     /**
      * More info at https://ru.wikipedia.org/wiki/NMEA_0183
      *
@@ -27,8 +32,8 @@ class GpRmc extends RmcAbstract
         $this->setType('GP');
         $this->setTime($this->parseTime($fields[1], $fields[9]));
         $this->setStatus($fields[2] ?? 'A');
-        $this->setLatitude($this->getLatLng($fields[3]));
-        $this->setLongitude($this->getLatLng($fields[5]));
+        $this->setLatitude($this->parseCoordinates($fields[3], $fields[4], 'lat'));
+        $this->setLongitude($this->parseCoordinates($fields[5], $fields[6], 'lng'));
     }
 
     /**
@@ -49,11 +54,20 @@ class GpRmc extends RmcAbstract
     }
 
     /**
-     * @param string
+     * @param $value
+     * @param $dir
+     * @param $type
      * @return float
+     * @throws \Exception
      */
-    private function getLatLng($string) : float
+    private function parseCoordinates($value, $dir, $type) : float
     {
-        return floatval(substr($string, 2));
+        $dir = strtoupper($dir);
+        if (!in_array($dir, $this->dirs[$type])) {
+            throw new \Exception('Wrong direction ' . $dir);
+        }
+        $value /= 100;
+
+        return $dir == $this->dirs[$type][0] ? -$value : $value;
     }
 }
