@@ -23,7 +23,7 @@ To test server open two terminals and run the script:
 ```sh
 php server.php
 ```
-By default server listening port 5000.
+By default server listen port 5000.
 
 
 In the second terminal send test data. E.g. under Linux you can: 
@@ -62,7 +62,7 @@ DB migrations are places in **db/migrations** and seeds are in **db/seeds**.
 
 Twig was used to separate HTML from PHP. Twig templates can be found in **resources/twig** directory.
 
-JavaScript files was placed to **resources/js**, and SCSS to **resources/scss**.
+JavaScript files were placed to **resources/js**, and SCSS to **resources/scss**.
 
 The simplest ever front-end controller is **index.php** under the **public** directory (DOCUMENT_ROOT). 
 Besides there is another AJAX controller **ajax-latest-navigators.php** to simulate Google map auto refresh.
